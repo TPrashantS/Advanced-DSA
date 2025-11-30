@@ -1,0 +1,37 @@
+class Solution {
+    
+    public int knapsack(int W, int val[], int wt[]) {
+        int i= val.length;
+        int[][] dp = new int[i+1][W+1];
+        for (i = 0; i < val.length; i++){
+            Arrays.fill(dp[i+1], -1);
+        }
+        return mainone(i, W, val, wt, dp);
+    }
+    
+    public int mainone(int i, int W, int val[], int wt[], int dp[][]){
+        int Profit1 = 0;
+        int Profit2 = 0;
+        
+        //base case
+        if( W == 0){
+            return 0;
+        }
+        if( i == 0){
+            return 0;
+        }
+        
+        
+        if( dp[i][W]!=-1){
+            return dp[i][W];
+        }
+        //recurrence 
+        
+        if(wt[i-1]<= W){
+            Profit1 = val[i-1] + mainone(i-1, W-wt[i-1], val, wt, dp);
+        }
+        Profit2 = 0 + mainone(i-1, W, val, wt, dp);
+        return dp[i][W] = Math.max(Profit1, Profit2);
+        
+    }
+}
