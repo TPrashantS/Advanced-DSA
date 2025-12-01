@@ -1,0 +1,38 @@
+class Solution {
+
+    static Boolean isSubsetSum(int arr[], int sum) {
+        int i=arr.length;
+        int [][] dp = new int[i+1][sum+1];
+        for (i = 0; i < arr.length; i++){
+            Arrays.fill(dp[i+1], -1);
+        }
+        if (mainone(i, sum, arr, dp) == 0){
+            return true;
+        } else{
+            return false;
+        }
+    }
+    
+    public static int mainone(int i, int sum, int arr[],int dp[][]){
+        int pick = 1;
+        int notpick = 0;
+        
+        //base case
+        if (sum == 0){
+            return 0;
+        }
+        if (i == 0){
+            return 1;
+        }
+        
+        if( dp[i][sum]!=-1){
+            return dp[i][sum];
+        }
+        //recurrence
+        if(arr[i-1]<= sum){
+            pick =  mainone(i-1, sum-arr[i-1], arr, dp);
+        }
+        notpick =  mainone(i-1, sum, arr, dp);
+        return dp[i][sum] = (pick == 0 || notpick == 0) ? 0 : 1;
+    }
+}
